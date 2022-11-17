@@ -13,9 +13,8 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Signup } from "../helpers/firebase/firebaseAuthentication";
+import { useNavigate } from "react-router-dom";
 
 const RegisterSchema = yup.object().shape({
   name: yup.string().required(),
@@ -58,18 +57,13 @@ const theme = createTheme();
 
 export const Register = () => {
   const navigate = useNavigate();
-  const [formInput, setFormInput] = useState({
-    name: "",
-    surname: "",
-    email: "",
-    password: "",
-  });
-  const { name, surname, email, password } = formInput;
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    const displayName = `${name}${surname}`;
-    Signup(email, password, navigate, displayName);
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
   };
 
   return (
@@ -114,9 +108,15 @@ export const Register = () => {
               Register
             </Typography>
             <Formik
-              initialValues={{ email: "", password: "" }}
+              initialValues={{ name: "", surname: "", email: "", password: "" }}
               validationSchema={RegisterSchema}
               onSubmit={(values, actions) => {
+                {
+                  const displayName = `${values.name} ${values.surname}`;
+                  console.log(displayName);
+                  Signup(values.email, values.password, navigate, displayName);
+                }
+
                 actions.resetForm();
                 actions.setSubmitting(false);
               }}
@@ -129,7 +129,7 @@ export const Register = () => {
                 handleBlur,
                 errors,
               }) => (
-                <Form onSubmit={handleSubmit}>
+                <Form>
                   <Box sx={{ mt: 1 }}>
                     <TextField
                       margin="normal"
@@ -137,12 +137,11 @@ export const Register = () => {
                       fullWidth
                       id="name"
                       label="name"
+                      autoFocus
                       name="name"
                       autoComplete="name"
-                      value={name}
-                      onChange={(e) =>
-                        setFormInput({ ...formInput, name: e.target.value })
-                      }
+                      value={values.name}
+                      onChange={handleChange}
                       onBlur={handleBlur}
                       error={touched.name && Boolean(errors.name)}
                       helperText={touched.name && errors.name}
@@ -155,10 +154,8 @@ export const Register = () => {
                       label="Surname"
                       name="surname"
                       autoComplete="surname"
-                      value={surname}
-                      onChange={(e) =>
-                        setFormInput({ ...formInput, surname: e.target.value })
-                      }
+                      value={values.surname}
+                      onChange={handleChange}
                       onBlur={handleBlur}
                       error={touched.surname && Boolean(errors.surname)}
                       helperText={touched.surname && errors.surname}
@@ -169,13 +166,11 @@ export const Register = () => {
                       fullWidth
                       id="email"
                       label="Email Address"
-                      type="email"
                       name="email"
                       autoComplete="email"
-                      value={email}
-                      onChange={(e) =>
-                        setFormInput({ ...formInput, email: e.target.value })
-                      }
+                      type="email"
+                      value={values.email}
+                      onChange={handleChange}
                       onBlur={handleBlur}
                       error={touched.email && Boolean(errors.email)}
                       helperText={touched.email && errors.email}
@@ -188,11 +183,9 @@ export const Register = () => {
                       label="Password"
                       type="password"
                       id="password"
-                      autoComplete="password"
-                      value={password}
-                      onChange={(e) =>
-                        setFormInput({ ...formInput, password: e.target.value })
-                      }
+                      autoComplete="current-password"
+                      value={values.password}
+                      onChange={handleChange}
                       onBlur={handleBlur}
                       error={touched.password && Boolean(errors.password)}
                       helperText={touched.password && errors.password}

@@ -12,6 +12,9 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
+import { useState } from "react";
+import { signin } from "../helpers/firebase/firebaseAuthentication";
+import { useNavigate } from "react-router-dom";
 
 const LoginSchema = yup.object().shape({
   email: yup.string().email().required(),
@@ -53,6 +56,7 @@ const theme = createTheme();
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -106,6 +110,7 @@ export const Login = () => {
               onSubmit={(values, actions) => {
                 actions.resetForm();
                 actions.setSubmitting(false);
+                signin(values.email, values.password, navigate);
               }}
             >
               {({
@@ -128,10 +133,8 @@ export const Login = () => {
                       name="email"
                       autoComplete="email"
                       autoFocus
-                      value={email}
-                      onChange={(e) =>
-                        setFormInput({ ...formInput, email: e.target.value })
-                      }
+                      value={values.name}
+                      onChange={handleChange}
                       onBlur={handleBlur}
                       error={touched.email && Boolean(errors.email)}
                       helperText={touched.email && errors.email}
@@ -145,10 +148,8 @@ export const Login = () => {
                       id="password"
                       type="password"
                       autoComplete="current-password"
-                      value={password}
-                      onChange={(e) =>
-                        setFormInput({ ...formInput, password: e.target.value })
-                      }
+                      value={values.name}
+                      onChange={handleChange}
                       onBlur={handleBlur}
                       error={touched.password && Boolean(errors.password)}
                       helperText={touched.password && errors.password}
