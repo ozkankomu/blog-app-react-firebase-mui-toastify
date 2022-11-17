@@ -13,7 +13,11 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { useState } from "react";
-import { signin } from "../helpers/firebase/firebaseAuthentication";
+import {
+  forgotPassword,
+  signin,
+  signUpWithGoogle,
+} from "../helpers/firebase/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
 
 const LoginSchema = yup.object().shape({
@@ -157,7 +161,11 @@ export const Login = () => {
 
                     <Grid container>
                       <Grid item xs>
-                        <Link href="#" variant="body2">
+                        <Link
+                          href="#"
+                          variant="body2"
+                          onClick={() => forgotPassword(values.email)}
+                        >
                           Forgot password?
                         </Link>
                       </Grid>
@@ -180,6 +188,7 @@ export const Login = () => {
                       fullWidth
                       variant="contained"
                       sx={{ mt: 2, mb: 2 }}
+                      onClick={() => signUpWithGoogle(navigate)}
                     >
                       Continue with Google
                     </Button>

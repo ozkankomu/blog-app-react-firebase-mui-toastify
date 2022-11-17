@@ -68,11 +68,12 @@ export const signUpWithGoogle = (navigate) => {
 
 export const forgotPassword = (email) => {
   //? Email yoluyla şifre sıfırlama için kullanılan firebase metodu
+
   sendPasswordResetEmail(auth, email)
     .then(() => {
       toastwarn("Please check your mail box!");
     })
     .catch((err) => {
-      toastwarn(err.message);
+      toastwarn("Please enter your email adres");
     });
 };
