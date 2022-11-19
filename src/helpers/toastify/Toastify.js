@@ -14,7 +14,7 @@ export const toastwarn = (msg) => {
 
 export const toastsuccess = (msg) => {
   toast.success(msg, {
-    autoClose: 5000,
+    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
