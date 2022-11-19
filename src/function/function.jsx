@@ -1,6 +1,14 @@
-import { getDatabase, push, ref, set, onValue } from "firebase/database";
+import {
+  getDatabase,
+  push,
+  ref,
+  set,
+  onValue,
+  remove,
+} from "firebase/database";
 import { useEffect, useState } from "react";
 import firebase from "../helpers/firebase/firebaseDb";
+import { toastwarn } from "../helpers/toastify/Toastify";
 
 export const AddUser = (form) => {
   const db = getDatabase(firebase);
@@ -19,7 +27,7 @@ export const useGetData = () => {
   const [contactList, setContactList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    const db = getDatabase();
+    const db = getDatabase(firebase);
     const userRef = ref(db, "users/");
 
     onValue(userRef, (snapshot) => {
@@ -34,4 +42,11 @@ export const useGetData = () => {
   }, []);
 
   return { isLoading, contactList };
+};
+
+export const deleteBlog = (id) => {
+  console.log(id);
+  const db = getDatabase(firebase);
+  remove(ref(db, "users/" + id));
+  toastwarn("Blog Deleted Successfuly");
 };

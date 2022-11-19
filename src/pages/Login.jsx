@@ -19,6 +19,7 @@ import {
   signUpWithGoogle,
 } from "../helpers/firebase/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const LoginSchema = yup.object().shape({
   email: yup.string().email().required(),
@@ -58,13 +59,10 @@ function Copyright(props) {
 const theme = createTheme();
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -114,7 +112,7 @@ const Login = () => {
               onSubmit={(values, actions) => {
                 actions.resetForm();
                 actions.setSubmitting(false);
-                signin(values.email, values.password, navigate);
+                signin(values.email, values.password, navigate, dispatch);
               }}
             >
               {({
@@ -188,7 +186,7 @@ const Login = () => {
                       fullWidth
                       variant="contained"
                       sx={{ mt: 2, mb: 2 }}
-                      onClick={() => signUpWithGoogle(navigate)}
+                      onClick={() => signUpWithGoogle(navigate, dispatch)}
                     >
                       Continue with Google
                     </Button>

@@ -15,7 +15,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useGetData } from "../function/function";
+import { deleteBlog, useGetData } from "../function/function";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import MessageIcon from "@mui/icons-material/Message";
 
 function Copyright() {
   return (
@@ -33,6 +35,7 @@ const theme = createTheme();
 
 const Home = () => {
   const { isLoading, contactList } = useGetData();
+  console.log(contactList);
 
   return (
     <ThemeProvider theme={theme}>
@@ -105,12 +108,18 @@ const Home = () => {
                     >
                       {card.title}
                     </Typography>
-                    <Typography>{card.content}</Typography>
+                    <Typography className="lineClamp">
+                      {card.content}
+                    </Typography>
                   </CardContent>
-                  <CardActions>
+                  <CardActions sx={{ mx: "auto" }}>
+                    <FavoriteBorderIcon sx={{ cursor: "pointer" }} />
                     <Button size="small">View</Button>
                     <Button size="small">Edit</Button>
-                    <Button size="small">Delete</Button>
+                    <Button size="small" onClick={() => deleteBlog(card.id)}>
+                      Delete
+                    </Button>
+                    <MessageIcon sx={{ cursor: "pointer" }} />
                   </CardActions>
                 </Card>
               </Grid>

@@ -1,4 +1,5 @@
 // Import the functions you need from the SDKs you need
+import { onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -10,6 +11,8 @@ import {
   sendPasswordResetEmail,
   GoogleAuthProvider,
 } from "firebase/auth";
+import { setUser } from "../../features/authSlice";
+import { clearUser } from "../../features/authSlice";
 import { toastsuccess, toastwarn } from "../toastify/Toastify";
 
 const firebaseConfig = {
@@ -26,10 +29,26 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-export const Signup = async (email, password, navigate, displayName) => {
+export const Signup = async (
+  email,
+  password,
+  navigate,
+  displayName,
+  dispatch
+) => {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(auth.currentUser, { displayName: displayName });
+
+    await updateProfile(auth.currentUser, {
+      displayName: displayName,
+    });
+
+    dispatch(
+      setUser({
+        username: displayName,
+        email: email,
+      })
+    );
     toastsuccess("Logged in successfully!");
     navigate("/");
   } catch (error) {
@@ -37,7 +56,7 @@ export const Signup = async (email, password, navigate, displayName) => {
   }
 };
 
-export const signin = async (email, password, navigate) => {
+export const signin = async (email, password, navigate, dispatch) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     toastsuccess("Logged in successfully!");
@@ -47,17 +66,25 @@ export const signin = async (email, password, navigate) => {
   }
 };
 
-export const logOut = (navigate) => {
+export const logOut = (navigate, dispatch) => {
   signOut(auth);
+  dispatch(clearUser());
   toastsuccess("Logged out successfully!");
   navigate("/login");
 };
 
-export const signUpWithGoogle = (navigate) => {
+export const signUpWithGoogle = (navigate, dispatch) => {
   const provider = new GoogleAuthProvider();
 
   signInWithPopup(auth, provider)
     .then((result) => {
+      console.log(result);
+      dispatch(
+        setUser({
+          username: result.user.displayName,
+          email: result.email,
+        })
+      );
       navigate("/");
       toastsuccess("Logged in successfully!");
     })
@@ -76,4 +103,20 @@ export const forgotPassword = (email) => {
     .catch((err) => {
       toastwarn("Please enter your email adres");
     });
+};
+
+export const userObserver = (dispatch) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const { email, displayName } = user;
+      dispatch(
+        setUser({
+          username: displayName,
+          email: email,
+        })
+      );
+    } else {
+      dispatch(clearUser());
+    }
+  });
 };
