@@ -90,16 +90,19 @@ const Home = () => {
                 >
                   <CardMedia
                     component="img"
-                    sx={
-                      {
-                        // 16: 9,
-                        // pt: "56.25%",
-                      }
-                    }
+                    sx={{
+                      height: "345px",
+                      borderRadius: "50%",
+                    }}
                     image={card.imageUrl}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      align="center"
+                      component="h2"
+                    >
                       {card.title}
                     </Typography>
                     <Typography>{card.content}</Typography>
