@@ -57,7 +57,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export const Login = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();

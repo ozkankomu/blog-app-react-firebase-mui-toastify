@@ -59,7 +59,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export const Register = () => {
+const Register = () => {
   const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
