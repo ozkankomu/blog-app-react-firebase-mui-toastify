@@ -223,7 +223,7 @@ export const Register = () => {
                     >
                       Continue with Google
                     </Button>
-                    <Copyright sx={{ mt: 5 }} />
+                    <Copyright sx={{ mt: 1 }} />
                   </Box>
                 </Form>
               )}

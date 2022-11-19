@@ -24,9 +24,14 @@ export const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
+          <Button
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+            onClick={() => navigate("/newBlog")}
+          >
+            New Blog
+          </Button>
           <Button color="inherit" onClick={() => navigate("/")}>
             Home
           </Button>
