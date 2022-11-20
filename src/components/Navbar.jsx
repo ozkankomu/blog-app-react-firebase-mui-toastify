@@ -40,7 +40,7 @@ export const Navbar = () => {
           <Button color="inherit" onClick={() => navigate("/")}>
             Home
           </Button>
-          {user.username ? (
+          {user?.username ? (
             <>
               <Avatar
                 sx={{ mx: "8px" }}

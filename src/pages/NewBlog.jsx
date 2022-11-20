@@ -27,6 +27,7 @@ export const NewBlog = () => {
     content: "",
     username: user.username,
     email: user.email,
+    photoURL: user.photoURL,
   });
 
   console.log(user);

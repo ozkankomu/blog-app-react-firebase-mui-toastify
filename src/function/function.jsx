@@ -21,7 +21,8 @@ export const AddUser = (form) => {
     imageUrl: form.imageUrl,
     content: form.content,
     username: form.username,
-
+    email: form.email,
+    photoURL: form.photoURL,
     date: new Date().toLocaleString("tr-TR"),
     comments: [],
   });
@@ -49,7 +50,6 @@ export const useGetData = () => {
 };
 
 export const deleteBlog = (id) => {
-  console.log(id);
   const db = getDatabase(firebase);
   remove(ref(db, "users/" + id));
   toastwarn("Blog Deleted Successfuly");

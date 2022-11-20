@@ -84,7 +84,7 @@ export const signUpWithGoogle = (navigate, dispatch) => {
       dispatch(
         setUser({
           username: result.user.displayName,
-          email: result.email,
+          email: result.user.email,
         })
       );
       navigate("/");

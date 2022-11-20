@@ -19,6 +19,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { updateBlog, useGetData } from "../function/function";
 import { useSelector } from "react-redux";
 import { update } from "firebase/database";
+import { useState } from "react";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -41,27 +42,29 @@ export default function BlogDetail() {
   const { user } = useSelector((state) => state.auth);
   const { username, email } = user;
   const { state } = useLocation();
+  const { comments } = state;
   const [commentInput, setCommentInput] = React.useState([]);
-  const [comment, setComment] = React.useState("");
+  const [comment, setComment] = useState();
 
-  const handleSubmit = () => {
+  React.useEffect(() => {
     const date = new Date().toLocaleString("tr-TR");
-
     setComment({
       ...state,
       comments: {
-        id: id,
         date: date,
-        comment: commentInput,
+        id: id,
         username: username,
-        email: email,
+        comment: commentInput,
+        // email: email,
       },
     });
-    console.log(state);
+  }, [commentInput]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     updateBlog(comment);
     navigate("/");
   };
-  console.log(comment);
 
   return (
     <Container align="center" sx={{ mt: "3rem" }}>
@@ -133,7 +136,7 @@ export default function BlogDetail() {
             fullWidth
             variant="contained"
             sx={{ mt: 2 }}
-            onClick={() => handleSubmit()}
+            onClick={handleSubmit}
           >
             Send Comment
           </Button>
@@ -141,7 +144,11 @@ export default function BlogDetail() {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Card sx={{ maxWidth: 700 }}>
-              <Avatar></Avatar>
+              <Avatar
+                sx={{ bgcolor: red[500] }}
+                src={user.photoURL}
+                aria-label="recipe"
+              ></Avatar>
 
               <CardContent>
                 <Typography variant="h6">{state?.comments?.comment}</Typography>

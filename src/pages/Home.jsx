@@ -19,6 +19,8 @@ import { deleteBlog, useGetData } from "../function/function";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import MessageIcon from "@mui/icons-material/Message";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { alertTitleClasses } from "@mui/material";
 
 function Copyright() {
   return (
@@ -35,8 +37,23 @@ function Copyright() {
 const theme = createTheme();
 
 const Home = () => {
+  const { user } = useSelector((state) => state.auth);
   const { isLoading, contactList } = useGetData();
   const navigate = useNavigate();
+
+  const handleDelete = (id, username) => {
+    console.log(user.username);
+    console.log(username);
+    console.log(contactList);
+
+    if (user.username === username) {
+      if (window.confirm("Are you sure to delete the Blog Title")) {
+        deleteBlog(id);
+      }
+    } else {
+      alert("You can only delete the blog title you added");
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -125,7 +142,7 @@ const Home = () => {
                 />
               </div>
               <div className="carousel-inner">
-                <div className="carousel-item active" data-bs-interval={10000}>
+                <div className="carousel-item active" data-bs-interval={5000}>
                   <img
                     src="https://thumbs.dreamstime.com/b/wildlife-wild-animals-nature-isolated-animal-illustration-orientation-banner-panoramic-panorama-each-white-213967473.jpg"
                     className="d-block w-100"
@@ -261,7 +278,10 @@ const Home = () => {
                       View
                     </Button>
                     <Button size="small">Edit</Button>
-                    <Button size="small" onClick={() => deleteBlog(card.id)}>
+                    <Button
+                      size="small"
+                      onClick={() => handleDelete(card.id, card.username)}
+                    >
                       Delete
                     </Button>
                     <MessageIcon sx={{ cursor: "pointer" }} />
@@ -273,19 +293,28 @@ const Home = () => {
         </Container>
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+      <Box sx={{ bgcolor: "background.paper", p: 3 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
           Footer
         </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
+        <hr />
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
         >
-          Welcome Our Test Blog Site!
-        </Typography>
-        <Copyright />
+          <Typography
+            variant="subtitle1"
+            align="center"
+            color="text.secondary"
+            component="p"
+          >
+            Welcome Our Test Blog Site!
+          </Typography>
+          <Copyright />
+        </Box>
       </Box>
     </ThemeProvider>
   );

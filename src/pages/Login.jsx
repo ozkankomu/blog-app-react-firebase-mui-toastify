@@ -182,7 +182,7 @@ const Login = () => {
                       Sign In
                     </Button>
                     <Button
-                      type="submit"
+                      type="button"
                       fullWidth
                       variant="contained"
                       sx={{ mt: 2, mb: 2 }}
