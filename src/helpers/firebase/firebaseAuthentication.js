@@ -47,8 +47,10 @@ export const Signup = async (
       setUser({
         username: displayName,
         email: email,
+        photoURL: auth.currentUser.photoURL,
       })
     );
+
     toastsuccess("Logged in successfully!");
     navigate("/");
   } catch (error) {
@@ -108,11 +110,12 @@ export const forgotPassword = (email) => {
 export const userObserver = (dispatch) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      const { email, displayName } = user;
+      const { email, displayName, photoURL } = user;
       dispatch(
         setUser({
           username: displayName,
           email: email,
+          photoURL: photoURL,
         })
       );
     } else {

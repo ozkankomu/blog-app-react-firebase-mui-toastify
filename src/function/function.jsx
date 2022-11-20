@@ -1,3 +1,4 @@
+import { Info } from "@mui/icons-material";
 import {
   getDatabase,
   push,
@@ -5,6 +6,7 @@ import {
   set,
   onValue,
   remove,
+  update,
 } from "firebase/database";
 import { useEffect, useState } from "react";
 import firebase from "../helpers/firebase/firebaseDb";
@@ -18,8 +20,10 @@ export const AddUser = (form) => {
     title: form.title,
     imageUrl: form.imageUrl,
     content: form.content,
-    id: new Date().getTime(),
-    userId: "email",
+    username: form.username,
+
+    date: new Date().toLocaleString("tr-TR"),
+    comments: [],
   });
 };
 
@@ -49,4 +53,13 @@ export const deleteBlog = (id) => {
   const db = getDatabase(firebase);
   remove(ref(db, "users/" + id));
   toastwarn("Blog Deleted Successfuly");
+};
+
+export const updateBlog = (comment) => {
+  const db = getDatabase(firebase);
+  const userRef = ref(db, "users/");
+  const updates = {};
+  updates["users/" + comment.id] = comment;
+
+  return update(ref(db), updates);
 };

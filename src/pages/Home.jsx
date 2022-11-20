@@ -18,6 +18,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { deleteBlog, useGetData } from "../function/function";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import MessageIcon from "@mui/icons-material/Message";
+import { useNavigate } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -35,7 +36,7 @@ const theme = createTheme();
 
 const Home = () => {
   const { isLoading, contactList } = useGetData();
-  console.log(contactList);
+  const navigate = useNavigate();
 
   return (
     <ThemeProvider theme={theme}>
@@ -45,16 +46,16 @@ const Home = () => {
         <Box
           sx={{
             bgcolor: "background.paper",
-            pt: 8,
-            pb: 6,
+            pt: 4,
+            pb: 4,
           }}
         >
           <Container maxWidth="sm">
             <Typography
-              component="h1"
-              variant="h2"
+              component="h2"
+              variant="h3"
               align="center"
-              color="text.primary"
+              color="text.secondary"
               gutterBottom
             >
               Blog layout
@@ -64,22 +65,158 @@ const Home = () => {
               align="center"
               color="text.secondary"
               paragraph
+              sx={{
+                bgcolor: "background.paper",
+              }}
             >
-              Something short and leading about the collection below—its
-              contents, the creator, etc. Make it short and sweet, but not too
-              short so folks don&apos;t simply skip over it entirely.
+              You can share whatever comes to mind for the following content and
+              more on this Blog Layout platform.
             </Typography>
             <Stack
-              sx={{ pt: 4 }}
+              sx={{ pt: 2 }}
               direction="row"
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
+              <Button
+                sx={{ width: "150px" }}
+                variant="contained"
+                onClick={() => navigate("/login")}
+              >
+                Please Login
+              </Button>
+              <Button variant="outlined" onClick={() => navigate("/Register")}>
+                Please register
+              </Button>
             </Stack>
           </Container>
+          <Stack
+            sx={{
+              bgcolor: "background.paper",
+              pt: 2,
+              pb: 2,
+            }}
+          >
+            <div
+              id="carouselExampleDark"
+              className="carousel carousel-dark slide"
+              data-bs-ride="carousel"
+            >
+              <div className="carousel-indicators">
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleDark"
+                  data-bs-slide-to={0}
+                  className="active"
+                  aria-current="true"
+                  aria-label="Slide 1"
+                />
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleDark"
+                  data-bs-slide-to={1}
+                  aria-label="Slide 2"
+                />
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleDark"
+                  data-bs-slide-to={2}
+                  aria-label="Slide 3"
+                />
+              </div>
+              <div className="carousel-inner">
+                <div className="carousel-item active" data-bs-interval={10000}>
+                  <img
+                    src="https://thumbs.dreamstime.com/b/wildlife-wild-animals-nature-isolated-animal-illustration-orientation-banner-panoramic-panorama-each-white-213967473.jpg"
+                    className="d-block w-100"
+                    alt="img"
+                    style={{ height: "500px" }}
+                  />
+                  <div className="carousel-caption d-none d-md-block">
+                    <h2
+                      style={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "6rem",
+                        marginBottom: "9rem",
+                        textShadow: "6px 6px 15px black",
+                      }}
+                    >
+                      Animals
+                    </h2>
+                  </div>
+                </div>
+                <div className="carousel-item" data-bs-interval={2000}>
+                  <img
+                    src="https://cdn.pixabay.com/photo/2017/08/31/16/20/robot-2701312__340.png"
+                    className="d-block w-100"
+                    alt="img"
+                    style={{ height: "500px" }}
+                  />
+                  <div className="carousel-caption d-none d-md-block">
+                    <h5
+                      style={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "6rem",
+                        marginBottom: "10rem",
+                        textShadow: "6px 6px 15px black",
+                      }}
+                    >
+                      Robots
+                    </h5>
+                  </div>
+                </div>
+                <div className="carousel-item">
+                  <img
+                    src="https://previews.123rf.com/images/dusanzidar/dusanzidar1703/dusanzidar170300006/73297139-selection-of-healthy-food-on-white-background-.jpg"
+                    className="d-block w-100"
+                    alt="img"
+                    style={{ height: "500px" }}
+                  />
+                  <div className="carousel-caption d-none d-md-block">
+                    <h5
+                      style={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "7rem",
+                        marginBottom: "9rem",
+                        textShadow: "6px 6px 15px black",
+                      }}
+                    >
+                      Foods
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              <button
+                className="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide="prev"
+              >
+                <span
+                  className="carousel-control-prev-icon"
+                  aria-hidden="true"
+                />
+                <span className="visually-hidden">Previous</span>
+              </button>
+              <button
+                className="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide="next"
+              >
+                <span
+                  className="carousel-control-next-icon"
+                  aria-hidden="true"
+                />
+                <span className="visually-hidden">Next</span>
+              </button>
+            </div>
+          </Stack>
         </Box>
+
         <Container sx={{ py: 4, color: "#8888" }} maxWidth="xl">
           <Grid container spacing={4}>
             {contactList?.map((card, index) => (
@@ -89,15 +226,18 @@ const Home = () => {
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
+                    cursor: "pointer",
                   }}
                 >
                   <CardMedia
                     component="img"
                     sx={{
                       height: "345px",
-                      borderRadius: "50%",
+
+                      borderRadius: "20%",
                     }}
                     image={card.imageUrl}
+                    onClick={() => navigate(`${card.id}`, { state: card })}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography
@@ -114,7 +254,12 @@ const Home = () => {
                   </CardContent>
                   <CardActions sx={{ mx: "auto" }}>
                     <FavoriteBorderIcon sx={{ cursor: "pointer" }} />
-                    <Button size="small">View</Button>
+                    <Button
+                      size="small"
+                      onClick={() => navigate(`${card.id}`, { state: card })}
+                    >
+                      View
+                    </Button>
                     <Button size="small">Edit</Button>
                     <Button size="small" onClick={() => deleteBlog(card.id)}>
                       Delete

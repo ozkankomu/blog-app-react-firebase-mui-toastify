@@ -42,7 +42,6 @@ export const Navbar = () => {
           </Button>
           {user.username ? (
             <>
-              <h4>{user.username}</h4>{" "}
               <Avatar
                 sx={{ mx: "8px" }}
                 src={

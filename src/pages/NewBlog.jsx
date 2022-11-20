@@ -13,20 +13,23 @@ import { useState } from "react";
 import { AddUser } from "../function/function";
 import { useNavigate } from "react-router-dom";
 import { FormControl } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const theme = createTheme();
 
 export const NewBlog = () => {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   const [form, setForm] = useState({
     title: "",
     imageUrl: "",
     content: "",
-    id: new Date().getTime(),
-    userId: "email",
+    username: user.username,
+    email: user.email,
   });
 
+  console.log(user);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(form);
@@ -38,8 +41,6 @@ export const NewBlog = () => {
       title: "",
       imageUrl: "",
       content: "",
-      id: new Date().getTime(),
-      userId: "email",
     });
   };
 
