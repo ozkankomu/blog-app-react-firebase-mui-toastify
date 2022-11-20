@@ -270,7 +270,10 @@ const Home = () => {
                     </Typography>
                   </CardContent>
                   <CardActions sx={{ mx: "auto" }}>
-                    <FavoriteBorderIcon sx={{ cursor: "pointer" }} />
+                    <FavoriteBorderIcon
+                      type="button"
+                      // sx={{ cursor: "pointer" }}
+                    />
                     <Button
                       size="small"
                       onClick={() => navigate(`${card.id}`, { state: card })}

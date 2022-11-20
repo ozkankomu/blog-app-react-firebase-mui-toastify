@@ -18,7 +18,7 @@ import { Box } from "@mui/system";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { updateBlog, useGetData } from "../function/function";
 import { useSelector } from "react-redux";
-import { update } from "firebase/database";
+
 import { useState } from "react";
 
 const ExpandMore = styled((props) => {
@@ -43,6 +43,7 @@ export default function BlogDetail() {
   const { username, email } = user;
   const { state } = useLocation();
   const { comments } = state;
+
   const [commentInput, setCommentInput] = React.useState([]);
   const [comment, setComment] = useState();
 
@@ -55,7 +56,6 @@ export default function BlogDetail() {
         id: id,
         username: username,
         comment: commentInput,
-        // email: email,
       },
     });
   }, [commentInput]);
@@ -79,7 +79,7 @@ export default function BlogDetail() {
         <CardContent>
           <Avatar
             sx={{ bgcolor: red[500] }}
-            src={user.photoURL}
+            src={state.photoURL}
             aria-label="recipe"
           ></Avatar>
 
@@ -146,7 +146,7 @@ export default function BlogDetail() {
             <Card sx={{ maxWidth: 700 }}>
               <Avatar
                 sx={{ bgcolor: red[500] }}
-                src={user.photoURL}
+                src={state?.comments?.photoURL}
                 aria-label="recipe"
               ></Avatar>
 
