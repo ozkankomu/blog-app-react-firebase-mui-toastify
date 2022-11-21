@@ -30,13 +30,9 @@ export const NewBlog = () => {
     photoURL: user.photoURL,
   });
 
-  console.log(user);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
-
     AddUser(form);
-
     navigate("/");
     setForm({
       title: "",
