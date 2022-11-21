@@ -22,7 +22,7 @@ export const AddUser = (form) => {
     content: form.content,
     username: form.username,
     email: form.email,
-    photoURL: form.photoURL,
+
     date: new Date().toLocaleString("tr-TR"),
     comments: [],
   });
