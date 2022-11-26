@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/blog-app-react-firebase-mui-toastify/static/css/main.33893811.css",
+    "main.js": "/blog-app-react-firebase-mui-toastify/static/js/main.e61410f9.js",
+    "index.html": "/blog-app-react-firebase-mui-toastify/index.html",
+    "main.33893811.css.map": "/blog-app-react-firebase-mui-toastify/static/css/main.33893811.css.map",
+    "main.e61410f9.js.map": "/blog-app-react-firebase-mui-toastify/static/js/main.e61410f9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.33893811.css",
+    "static/js/main.e61410f9.js"
+  ]
+}
