@@ -19,7 +19,7 @@
 
 
 ## The challenge
-Project aims to create a Blog App.   with React.JS / Fire Base / Toastify / MUİ .  In this project, I used  MUI ,  fire Base  for authantication and dataBase. 
+Project aims to create a Blog App.In my app you can add and modify blog and blog content. You can browse, like and comment on other blogs, but you cannot change or delete them. Likewise, you can only see someone else's blog comments, you cannot change them. Writen with React.JS (Fire Base / Toastify / MUİ). .  In this project, I used  MUI ,  fire Base  for authantication and dataBase. 
 
 
 ## Project Skeleton
