@@ -3,8 +3,6 @@
 </p>
 
 
-
-
  FireContact App
 ## Table of contents
 
