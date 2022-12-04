@@ -1,67 +1,106 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<p align="center">
+<a href="https://www.linkedin.com/in/ozkankomu/" target="_blank"><img src="photo1.png" alt="screenshot" target=_blanked></a>
+</p>
 
 
-### Advanced Configuration
+ FireContact App
+## Table of contents
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Project Skeleton ](#project-skeleton)
+  - [Links](#links)
+  - [Built with](#built-with)
+  - [Useful resources](#useful-resources)
+  - [Author](#author)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `yarn build` fails to minify
+## The challenge
+Project aims to create a Blog App.In my app you can add and modify blog and blog content. You can browse, like and comment on other blogs, but you cannot change or delete them. Likewise, you can only see someone else's blog comments, you cannot change them. Writen with React.JS (Fire Base / Toastify / MUİ). .  In this project, I used  MUI ,  fire Base  for authantication and dataBase. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Project Skeleton
+
+```
+ Blog App 
+|
+|----readme.md         
+SOLUTION
+├── public
+│     └── index.html
+├── src
+│    ├── app-router
+│    │       ├── AppRouter.js
+│    │       └── PrivateRouter.js
+│    ├── components
+│    │       ├── BlogCard.js
+│    │       ├── BlogForm.js
+│    │       └── Navbar.js
+│    ├── contexts
+│    │       ├── AuthContext.js
+│    │       └── BlogContext.js
+│    ├── helpers
+│    │       ├── firebase.js
+│    │       └── toastNotify.js
+│    ├── pages
+│    │       ├── About.js
+│    │       ├── Dashboard.js
+│    │       ├── Details.js
+│    │       ├── Login.js
+│    │       ├── NewBlog.js
+│    │       ├── Profile.js
+│    │       ├── Register.js
+│    │       └── UpdateBlog.js
+│    ├── assets.js
+│    │       └── [images]
+│    ├── App.js
+│    ├── App.css
+│    ├── index.js
+│    └── index.css
+├── .env
+├── package.json
+└── yarn.lock
+
+```
+
+
+
+## Screenshot
+<p align="left">
+<a href="https://ozkankomu.github.io/blog-app-react-firebase-mui-toastify/"><img src="screen.gif" alt="screenshot" target=_blanked></a>
+</p>
+
+
+
+## Links
+<hr>
+<b>Check The Live Website ➡️</b> <a href="https://ozkankomu.github.io/blog-app-react-firebase-mui-toastify/" target=_blanked> Live Website </a> 
+<hr>
+
+### Built with
+- REACT
+- MUI
+- Mobile-first workflow
+- Toastify  
+- FIRE BASE
+
+## Notes
+
+- I used React - MUI  , FıreBase ,  Toastify , 
+
+### Useful resources
+
+- [W3 Schoold](https://www.w3schools.com/) - This helped me for basics of website paradigm. I really liked this pattern and will use it going forward.
+- [MDN](https://developer.mozilla.org/en-US/) - This is an amazing document which helped me finally understand deep sides of web development. I'd recommend it to anyone still learning these concepts.
+
+
+
+
+
+
+## Author
+
+- Author - [Ozkan]
+
+<center> &#8987; Happy Coding  &#9997; </center>
