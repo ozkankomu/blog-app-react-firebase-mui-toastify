@@ -11,8 +11,7 @@ import {
   sendPasswordResetEmail,
   GoogleAuthProvider,
 } from "firebase/auth";
-import { setUser } from "../../features/authSlice";
-import { clearUser } from "../../features/authSlice";
+
 import { toastsuccess, toastwarn } from "../toastify/Toastify";
 
 const firebaseConfig = {
@@ -29,28 +28,13 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-export const Signup = async (
-  email,
-  password,
-  navigate,
-  displayName,
-  dispatch
-) => {
+export const Signup = async (email, password, navigate, displayName) => {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
 
     await updateProfile(auth.currentUser, {
       displayName: displayName,
     });
-
-    dispatch(
-      setUser({
-        username: displayName,
-        email: email,
-        photoURL: auth.currentUser.photoURL,
-      })
-    );
-
     toastsuccess("Logged in successfully!");
     navigate("/");
   } catch (error) {
@@ -58,7 +42,7 @@ export const Signup = async (
   }
 };
 
-export const signin = async (email, password, navigate, dispatch) => {
+export const signin = async (email, password, navigate) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     toastsuccess("Logged in successfully!");
@@ -68,25 +52,24 @@ export const signin = async (email, password, navigate, dispatch) => {
   }
 };
 
-export const logOut = (navigate, dispatch) => {
+export const logOut = (navigate, setCurrentUser) => {
   signOut(auth);
-  dispatch(clearUser());
+  setCurrentUser(false);
   toastsuccess("Logged out successfully!");
   navigate("/login");
 };
 
-export const signUpWithGoogle = (navigate, dispatch) => {
+export const signUpWithGoogle = (navigate, setCurrentUser) => {
   const provider = new GoogleAuthProvider();
 
   signInWithPopup(auth, provider)
     .then((result) => {
       console.log(result);
-      dispatch(
-        setUser({
-          username: result.user.displayName,
-          email: result.user.email,
-        })
-      );
+      setCurrentUser({
+        username: result.user.displayName,
+        email: result.user.email,
+      });
+
       navigate("/");
       toastsuccess("Logged in successfully!");
     })
@@ -107,19 +90,18 @@ export const forgotPassword = (email) => {
     });
 };
 
-export const userObserver = (dispatch) => {
+export const userObserver = (setCurrentUser) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const { email, displayName, photoURL } = user;
-      dispatch(
-        setUser({
-          username: displayName,
-          email: email,
-          photoURL: photoURL,
-        })
-      );
+
+      setCurrentUser({
+        displayName: displayName,
+        email: email,
+        photoURL: photoURL,
+      });
     } else {
-      dispatch(clearUser());
+      setCurrentUser(false);
     }
   });
 };

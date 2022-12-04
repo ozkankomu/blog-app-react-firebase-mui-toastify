@@ -1,15 +1,15 @@
-import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import AppRouter from "./app-router/AppRouter";
 import "./App.css";
-import store from "./app/store";
+
+import AuthContextProvider from "./context/AuthContextProvider";
 
 function App() {
   return (
-    <Provider store={store}>
+    <AuthContextProvider>
       <AppRouter />
       <ToastContainer />
-    </Provider>
+    </AuthContextProvider>
   );
 }
 

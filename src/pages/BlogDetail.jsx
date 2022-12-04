@@ -51,12 +51,15 @@ export default function BlogDetail() {
     const date = new Date().toLocaleString("tr-TR");
     setComment({
       ...state,
-      comments: {
-        date: date,
-        id: id,
-        username: username,
-        comment: commentInput,
-      },
+      comments: [
+        ...comments,
+        {
+          date: date,
+          id: id,
+          username: username,
+          comment: commentInput,
+        },
+      ],
     });
   }, [commentInput]);
 
