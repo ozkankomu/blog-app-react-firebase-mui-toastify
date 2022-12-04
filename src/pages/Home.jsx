@@ -1,7 +1,5 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
-import CameraIcon from "@mui/icons-material/PhotoCamera";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -10,7 +8,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
+
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
@@ -19,8 +17,7 @@ import { deleteBlog, useGetData } from "../function/function";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import MessageIcon from "@mui/icons-material/Message";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { alertTitleClasses } from "@mui/material";
+import { AuthContext } from "../context/AuthContextProvider";
 
 function Copyright() {
   return (
@@ -37,16 +34,14 @@ function Copyright() {
 const theme = createTheme();
 
 const Home = () => {
-  const { user } = useSelector((state) => state.auth);
-  const { isLoading, contactList } = useGetData();
+  const { currentUser, currentBlogs, setCurrentBlogs } =
+    React.useContext(AuthContext);
+  const { contactList } = useGetData();
   const navigate = useNavigate();
+  setCurrentBlogs(contactList);
 
   const handleDelete = (id, username) => {
-    console.log(user.username);
-    console.log(username);
-    console.log(contactList);
-
-    if (user.username === username) {
+    if (currentUser.username === username) {
       if (window.confirm("Are you sure to delete the Blog Title")) {
         deleteBlog(id);
       }
@@ -254,7 +249,7 @@ const Home = () => {
                       borderRadius: "20%",
                     }}
                     image={card.imageUrl}
-                    onClick={() => navigate(`${card.id}`, { state: card })}
+                    onClick={() => navigate(`${card.id}`)}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography
@@ -276,7 +271,7 @@ const Home = () => {
                     />
                     <Button
                       size="small"
-                      onClick={() => navigate(`${card.id}`, { state: card })}
+                      // onClick={() => navigate(`${card.id}`, { state: card })}
                     >
                       View
                     </Button>

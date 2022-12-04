@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
+import { AuthContext } from "../context/AuthContextProvider";
 import { userObserver } from "../helpers/firebase/firebaseAuthentication";
 import BlogDetail from "../pages/BlogDetail";
 import Home from "../pages/Home";
@@ -11,12 +12,10 @@ import Register from "../pages/Register";
 import PrivateRouter from "./PrivateRouter";
 
 const AppRouter = () => {
-  let currentUser = useSelector((state) => state.user);
-
-  const dispatch = useDispatch();
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   useEffect(() => {
-    userObserver(dispatch);
+    userObserver(currentUser, setCurrentUser);
   }, [currentUser]);
 
   return (

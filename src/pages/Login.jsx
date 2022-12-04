@@ -12,14 +12,13 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
-import { useState } from "react";
+
 import {
   forgotPassword,
   signin,
   signUpWithGoogle,
 } from "../helpers/firebase/firebaseAuthentication";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 const LoginSchema = yup.object().shape({
   email: yup.string().email().required(),
@@ -59,9 +58,6 @@ function Copyright(props) {
 const theme = createTheme();
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   return (
@@ -112,17 +108,10 @@ const Login = () => {
               onSubmit={(values, actions) => {
                 actions.resetForm();
                 actions.setSubmitting(false);
-                signin(values.email, values.password, navigate, dispatch);
+                signin(values.email, values.password, navigate);
               }}
             >
-              {({
-                values,
-                isSubmitting,
-                touched,
-                handleChange,
-                handleBlur,
-                errors,
-              }) => (
+              {({ values, touched, handleChange, handleBlur, errors }) => (
                 <Form>
                   <Box sx={{ mt: 1 }}>
                     <TextField
@@ -186,7 +175,7 @@ const Login = () => {
                       fullWidth
                       variant="contained"
                       sx={{ mt: 2, mb: 2 }}
-                      onClick={() => signUpWithGoogle(navigate, dispatch)}
+                      onClick={() => signUpWithGoogle(navigate)}
                     >
                       Continue with Google
                     </Button>

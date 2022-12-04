@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -12,22 +11,21 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { AddUser } from "../function/function";
 import { useNavigate } from "react-router-dom";
-import { FormControl } from "@mui/material";
-import { useSelector } from "react-redux";
+import { AuthContext } from "../context/AuthContextProvider";
 
 const theme = createTheme();
 
 export const NewBlog = () => {
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
+  const { currentUser } = React.useContext(AuthContext);
 
   const [form, setForm] = useState({
     title: "",
     imageUrl: "",
     content: "",
-    username: user.username,
-    email: user.email,
-    photoURL: user.photoURL,
+    username: currentUser.username,
+    email: currentUser.email,
+    photoURL: currentUser.photoURL,
   });
 
   const handleSubmit = (e) => {

@@ -52,24 +52,18 @@ export const signin = async (email, password, navigate) => {
   }
 };
 
-export const logOut = (navigate, setCurrentUser) => {
+export const logOut = (navigate) => {
   signOut(auth);
-  setCurrentUser(false);
   toastsuccess("Logged out successfully!");
   navigate("/login");
 };
 
-export const signUpWithGoogle = (navigate, setCurrentUser) => {
+export const signUpWithGoogle = (navigate) => {
   const provider = new GoogleAuthProvider();
 
   signInWithPopup(auth, provider)
     .then((result) => {
       console.log(result);
-      setCurrentUser({
-        username: result.user.displayName,
-        email: result.user.email,
-      });
-
       navigate("/");
       toastsuccess("Logged in successfully!");
     })
@@ -101,7 +95,7 @@ export const userObserver = (setCurrentUser) => {
         photoURL: photoURL,
       });
     } else {
-      setCurrentUser(false);
+      setCurrentUser();
     }
   });
 };

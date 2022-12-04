@@ -2,18 +2,15 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-
 import Button from "@mui/material/Button";
-
 import { useNavigate } from "react-router-dom";
 import { logOut } from "../helpers/firebase/firebaseAuthentication";
-import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "@mui/material";
+import { AuthContext } from "../context/AuthContextProvider";
 
 export const Navbar = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { currentUser, setCurrentUser } = React.useContext(AuthContext);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -28,12 +25,12 @@ export const Navbar = () => {
           <Button color="inherit" onClick={() => navigate("/")}>
             Home
           </Button>
-          {user?.username ? (
+          {currentUser?.displayName ? (
             <>
               <Avatar
                 sx={{ mx: "8px" }}
                 src={
-                  user?.photoURL ||
+                  currentUser?.photoURL ||
                   "https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png"
                 }
                 className="rounded-full"
@@ -44,10 +41,10 @@ export const Navbar = () => {
               />
               <Button
                 color="inherit"
-                onClick={() => logOut(navigate, dispatch)}
+                onClick={() => logOut(navigate, setCurrentUser)}
               >
                 Logout
-              </Button>{" "}
+              </Button>
             </>
           ) : (
             <>
