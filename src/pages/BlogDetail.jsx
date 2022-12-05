@@ -15,10 +15,11 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button, Container, TextField, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { updateBlog } from "../function/function";
+import { updateBlog, useGetData } from "../function/function";
 import { useState } from "react";
 import { AuthContext } from "../context/AuthContextProvider";
 import { useContext } from "react";
+import { useEffect } from "react";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -35,6 +36,7 @@ export default function BlogDetail() {
   const [expanded, setExpanded] = React.useState(true);
   const { currentBlogs, setCurrentBlogs } = useContext(AuthContext);
   const [commentInput, setCommentInput] = React.useState([]);
+  const [updatedCommnet, setupdatedCommnet] = useState([]);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -62,11 +64,21 @@ export default function BlogDetail() {
         },
       ],
     };
+    setupdatedCommnet(newComment);
 
     updateBlog(newComment);
     navigate("/");
   };
-  console.log(state);
+
+  const handleDelete = (date) => {
+    const deletedComments = state.comments.filter((item) => item.date !== date);
+    const newComment = { ...state, comments: [...deletedComments] };
+
+    setupdatedCommnet(newComment);
+    updateBlog(newComment);
+    navigate("/");
+  };
+
   return (
     <Container align="center" sx={{ mt: "3rem" }}>
       <Card sx={{ maxWidth: 850, borderRadius: "100px" }}>
@@ -159,6 +171,7 @@ export default function BlogDetail() {
           </Button>
         </div>
         {state?.comments?.map((item) => {
+          console.log(item);
           return (
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
@@ -177,8 +190,13 @@ export default function BlogDetail() {
                     </Typography>
                   </CardContent>
                   <CardActions sx={{ justifyContent: "center" }}>
-                    <Button size="small">Share</Button>
-                    <Button size="small">Learn More</Button>
+                    <Button
+                      size="small"
+                      onClick={() => handleDelete(item.date)}
+                    >
+                      Delete
+                    </Button>
+                    <Button size="small">Edit</Button>
                   </CardActions>
                 </Card>
               </CardContent>

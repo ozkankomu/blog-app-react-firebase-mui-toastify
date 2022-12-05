@@ -23,10 +23,12 @@ export const NewBlog = () => {
     title: "",
     imageUrl: "",
     content: "",
-    username: currentUser.username,
+    username: currentUser.displayName,
     email: currentUser.email,
     photoURL: currentUser.photoURL,
   });
+
+  console.log(form);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,7 +60,7 @@ export const NewBlog = () => {
           <Typography component="h1" variant="h4" color="#9c27b0">
             - New Blog -
           </Typography>
-          <Box component="form" onSubmit={handleSubmit}>
+          <Box component="form" onSubmit={(e) => handleSubmit(e)}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField

@@ -34,14 +34,13 @@ function Copyright() {
 const theme = createTheme();
 
 const Home = () => {
-  const { currentUser, currentBlogs, setCurrentBlogs } =
-    React.useContext(AuthContext);
+  const { currentUser, setCurrentBlogs } = React.useContext(AuthContext);
   const { contactList } = useGetData();
   const navigate = useNavigate();
   setCurrentBlogs(contactList);
 
   const handleDelete = (id, username) => {
-    if (currentUser.username === username) {
+    if (currentUser.displayName === username) {
       if (window.confirm("Are you sure to delete the Blog Title")) {
         deleteBlog(id);
       }
@@ -142,7 +141,7 @@ const Home = () => {
                     src="https://thumbs.dreamstime.com/b/wildlife-wild-animals-nature-isolated-animal-illustration-orientation-banner-panoramic-panorama-each-white-213967473.jpg"
                     className="d-block w-100"
                     alt="img"
-                    style={{ height: "500px" }}
+                    style={{ height: "500px", objectFit: "contain" }}
                   />
                   <div className="carousel-caption d-none d-md-block">
                     <h2
@@ -163,7 +162,7 @@ const Home = () => {
                     src="https://cdn.pixabay.com/photo/2017/08/31/16/20/robot-2701312__340.png"
                     className="d-block w-100"
                     alt="img"
-                    style={{ height: "500px" }}
+                    style={{ height: "500px", objectFit: "contain" }}
                   />
                   <div className="carousel-caption d-none d-md-block">
                     <h5
@@ -181,10 +180,10 @@ const Home = () => {
                 </div>
                 <div className="carousel-item">
                   <img
-                    src="https://previews.123rf.com/images/dusanzidar/dusanzidar1703/dusanzidar170300006/73297139-selection-of-healthy-food-on-white-background-.jpg"
+                    src="https://www.collinsdictionary.com/images/full/fruit_163436567.jpg"
                     className="d-block w-100"
                     alt="img"
-                    style={{ height: "500px" }}
+                    style={{ height: "500px", objectFit: "contain" }}
                   />
                   <div className="carousel-caption d-none d-md-block">
                     <h5
@@ -246,6 +245,8 @@ const Home = () => {
                     sx={{
                       height: "345px",
 
+                      objectFit: "contain",
+
                       borderRadius: "20%",
                     }}
                     image={card.imageUrl}
@@ -271,7 +272,7 @@ const Home = () => {
                     />
                     <Button
                       size="small"
-                      // onClick={() => navigate(`${card.id}`, { state: card })}
+                      onClick={() => navigate(`${card.id}`, { state: card })}
                     >
                       View
                     </Button>
