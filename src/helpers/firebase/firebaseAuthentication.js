@@ -84,7 +84,7 @@ export const forgotPassword = (email) => {
     });
 };
 
-export const userObserver = (setCurrentUser, currentUser) => {
+export const userObserver = (setCurrentUser) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const { email, displayName, photoURL } = user;
