@@ -249,7 +249,7 @@ const Home = () => {
                       borderRadius: "20%",
                     }}
                     image={card.imageUrl}
-                    onClick={() => navigate(`${card.id}`)}
+                    onClick={() => navigate(`${card.id}`, { state: card })}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography

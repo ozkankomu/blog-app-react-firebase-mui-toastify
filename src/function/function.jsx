@@ -22,7 +22,7 @@ export const AddUser = (form) => {
     content: form.content,
     username: form.username,
     email: form.email,
-
+    photoURL: form.photoURL,
     date: new Date().toLocaleString("tr-TR"),
     comments: [],
   });
@@ -55,11 +55,11 @@ export const deleteBlog = (id) => {
   toastwarn("Blog Deleted Successfuly");
 };
 
-export const updateBlog = (comment) => {
+export const updateBlog = (newComment) => {
   const db = getDatabase(firebase);
   const userRef = ref(db, "users/");
   const updates = {};
-  updates["users/" + comment.id] = comment;
+  updates["users/" + newComment.id] = newComment;
 
   return update(ref(db), updates);
 };

@@ -95,7 +95,7 @@ export const userObserver = (setCurrentUser) => {
         photoURL: photoURL,
       });
     } else {
-      setCurrentUser();
+      setCurrentUser("");
     }
   });
 };

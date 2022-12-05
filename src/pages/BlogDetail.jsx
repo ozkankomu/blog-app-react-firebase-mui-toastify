@@ -9,13 +9,12 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button, Container, TextField, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { updateBlog } from "../function/function";
 import { useState } from "react";
 import { AuthContext } from "../context/AuthContextProvider";
@@ -33,49 +32,48 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function BlogDetail() {
+  const [expanded, setExpanded] = React.useState(true);
   const { currentBlogs, setCurrentBlogs } = useContext(AuthContext);
+  const [commentInput, setCommentInput] = React.useState([]);
+
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { state } = useLocation();
+  const { currentUser } = React.useContext(AuthContext);
+  const date = new Date().toLocaleString("tr-TR");
+  const [comments, setComments] = useState(state.comments || []);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const [expanded, setExpanded] = React.useState(true);
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const { currentUser } = React.useContext(AuthContext);
 
-  const [commentInput, setCommentInput] = React.useState([]);
-  const [comment, setComment] = useState();
-
-  console.log(currentBlogs);
-  React.useEffect(() => {
-    const date = new Date().toLocaleString("tr-TR");
-    setComment({
-      // ...state,
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newComment = {
+      ...state,
       comments: [
-        // ...comments,
+        ...comments,
         {
           date: date,
           id: id,
           username: currentUser.displayName,
+          photoURL: currentUser.photoURL,
           comment: commentInput,
         },
       ],
-    });
-  }, [commentInput]);
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateBlog(comment);
+    updateBlog(newComment);
     navigate("/");
   };
-  const currentBlog = currentBlogs.filter((item) => item.id == id);
-  console.log(...currentBlog);
+  console.log(state);
   return (
     <Container align="center" sx={{ mt: "3rem" }}>
       <Card sx={{ maxWidth: 850, borderRadius: "100px" }}>
         <CardMedia
           component="img"
           height={"400px"}
-          image={currentBlog[0]?.imageUrl}
+          image={state?.imageUrl}
           alt="image"
         />
         <CardContent>
@@ -87,14 +85,14 @@ export default function BlogDetail() {
               padding: "1rem",
             }}
           >
-            <Avatar src={currentBlog[0]?.photoURL} aria-label="recipe"></Avatar>
+            <Avatar src={state?.photoURL} aria-label="recipe"></Avatar>
 
             <Typography sx={{ fontSize: "1.8rem", ml: "1rem" }}>
-              {currentBlog[0]?.username}
+              {state?.username}
             </Typography>
           </Box>
           <Typography variant="body1" color="text.primary">
-            {currentBlog[0].content}
+            {state.content}
           </Typography>
         </CardContent>
         <Button variant="contained" onClick={() => navigate("/")}>
@@ -108,10 +106,21 @@ export default function BlogDetail() {
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>
-          <Box sx={{ ml: "10rem" }}>
+          <Box align="end" flexGrow="1">
             {!expanded && (
-              <Typography onClick={handleExpandClick} sx={{ mx: "auto" }}>
+              <Typography
+                onClick={handleExpandClick}
+                sx={{ mx: "auto", cursor: "pointer" }}
+              >
                 Show Comments
+              </Typography>
+            )}
+            {expanded && (
+              <Typography
+                onClick={handleExpandClick}
+                sx={{ mx: "auto", cursor: "pointer" }}
+              >
+                Hide Comments
               </Typography>
             )}
           </Box>
@@ -149,16 +158,12 @@ export default function BlogDetail() {
             Send Comment
           </Button>
         </div>
-        {currentBlog[0].comments.map((item) => {
-          console.log(item);
+        {state?.comments?.map((item) => {
           return (
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
                 <Card sx={{ maxWidth: 700 }}>
-                  <Avatar
-                    // src={state?.comments?.photoURL}
-                    aria-label="recipe"
-                  ></Avatar>
+                  <Avatar src={item?.photoURL} aria-label="recipe"></Avatar>
 
                   <CardContent>
                     <Typography variant="h6">{item?.comment}</Typography>
