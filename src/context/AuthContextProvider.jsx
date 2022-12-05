@@ -8,7 +8,7 @@ const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
 
   useEffect(() => {
-    userObserver(setCurrentUser, currentUser);
+    userObserver(setCurrentUser);
   }, []);
 
   return (
