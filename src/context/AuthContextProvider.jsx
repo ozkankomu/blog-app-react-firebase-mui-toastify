@@ -9,7 +9,7 @@ const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     userObserver(setCurrentUser);
-  }, []);
+  }, [userObserver]);
 
   return (
     <AuthContext.Provider

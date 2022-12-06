@@ -90,12 +90,12 @@ export const userObserver = (setCurrentUser) => {
       const { email, displayName, photoURL } = user;
 
       setCurrentUser({
-        displayName: displayName,
-        email: email,
-        photoURL: photoURL,
+        displayName,
+        email,
+        photoURL,
       });
     } else {
-      setCurrentUser("");
+      setCurrentUser(null);
     }
   });
 };
